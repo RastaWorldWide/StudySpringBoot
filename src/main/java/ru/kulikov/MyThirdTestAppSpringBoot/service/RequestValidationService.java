@@ -1,31 +1,16 @@
-package ru.kulikov.MySecondTestAppSpringBoot.service;
+package ru.kulikov.MyThirdTestAppSpringBoot.service;
 
-<<<<<<< HEAD
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.ValidationFailedException;
-
-=======
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.UnsupportedCodeException;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.ValidationFailedException;
+import ru.kulikov.MyThirdTestAppSpringBoot.exception.ValidationFailedException;
 @Slf4j
->>>>>>> 2610f4407f3d5f6ad1e6552044f510be2ad493c9
 @Service
 public class RequestValidationService implements ValidationService {
 
     @Override
     public void isValid(BindingResult bindingResult) throws ValidationFailedException{
         if (bindingResult.hasErrors()) {
-<<<<<<< HEAD
-            throw new
-                    ValidationFailedException(bindingResult.getFieldError().toString());
-        }
-    }
-}
-=======
             StringBuilder errorMessage = new StringBuilder("Ошибки валидации: ");
             bindingResult.getFieldErrors().forEach(error -> {
                 errorMessage.append(String.format("[%s: %s] ", error.getField(), error.getDefaultMessage()));
@@ -36,4 +21,3 @@ public class RequestValidationService implements ValidationService {
         }
     }
 }
->>>>>>> 2610f4407f3d5f6ad1e6552044f510be2ad493c9

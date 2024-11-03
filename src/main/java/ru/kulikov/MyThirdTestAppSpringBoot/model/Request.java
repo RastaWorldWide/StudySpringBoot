@@ -1,4 +1,4 @@
-package ru.kulikov.MySecondTestAppSpringBoot.model;
+package ru.kulikov.MyThirdTestAppSpringBoot.model;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -18,10 +18,7 @@ public class Request {
     @NotBlank
     @Size(max = 32)
     private String uid;
-<<<<<<< HEAD
-=======
 
->>>>>>> 2610f4407f3d5f6ad1e6552044f510be2ad493c9
     @NotBlank
     @Size(max = 32)
     private String operationUid;
@@ -35,9 +32,6 @@ public class Request {
     private int templateId;
     private int productCode;
     private int smsCode;
-<<<<<<< HEAD
-}
-=======
 
     @Override
     public String toString() {
@@ -55,4 +49,3 @@ public class Request {
     }
 }
 
->>>>>>> 2610f4407f3d5f6ad1e6552044f510be2ad493c9
