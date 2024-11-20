@@ -13,14 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kulikov.MySecondTestAppSpringBoot.exception.*;
 import ru.kulikov.MySecondTestAppSpringBoot.model.*;
 import ru.kulikov.MySecondTestAppSpringBoot.service.*;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.UnsupportedCodeException;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.ValidationFailedException;
-import ru.kulikov.MySecondTestAppSpringBoot.model.*;
-import ru.kulikov.MySecondTestAppSpringBoot.service.ModifyResponseService;
-import ru.kulikov.MySecondTestAppSpringBoot.service.ValidationService;
-import ru.kulikov.MySecondTestAppSpringBoot.service.*;
 import ru.kulikov.MySecondTestAppSpringBoot.util.DateTimeUtil;
-import ru.kulikov.MySecondTestAppSpringBoot.exception.ValidationFailedException;
 
 import java.time.Year;
 import java.util.Calendar;
@@ -33,10 +26,11 @@ public class MyController {
     private final ValidationService validationService;
     private final ModifyResponseService modifyResponseService;
 
+    private final ModifyRequestService modifyRequestService;
+    private final AnnualBonusService annualBonusService;
+    private final QuarterlyBonusService quarterlyBonusService;
     @Autowired
     public MyController(ValidationService validationService,
-                        @Qualifier("ModifySystemTimeResponseService")
-                        ModifyResponseService modifyResponseService) {
                         @Qualifier("modifySystemTimeRequestService") ModifyRequestService modifyRequestService,
                         @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifyResponseService,
                         AnnualBonusService annualBonusService,
@@ -73,33 +67,10 @@ public class MyController {
             validationService.isValid(bindingResult);
 
         } catch (ValidationFailedException e) {
-            response.setCode(Codes.FAILED);
-            response.setErrorCode(ErrorCodes.VALIDATION_EXCEPTION);
-            response.setErrorMessage(ErrorMessages.VALIDATION);
-
-            log.info("add response error data: {}", response);
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
             return generateErrorResponse(response, ErrorCodes.VALIDATION_EXCEPTION, ErrorMessages.VALIDATION, HttpStatus.BAD_REQUEST);
         } catch (UnsupportedCodeException e) {
-            response.setCode(Codes.FAILED);
-            response.setErrorCode(ErrorCodes.UNSUPPORTED_EXCEPTION);
-            response.setErrorMessage(ErrorMessages.UNSUPPORTED);
-
-            log.info("add response error data: {}", response);
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
             return generateErrorResponse(response, ErrorCodes.UNSUPPORTED_EXCEPTION, ErrorMessages.UNSUPPORTED, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            response.setCode(Codes.FAILED);
-            response.setErrorCode(ErrorCodes.UNSUPPORTED_EXCEPTION);
-            response.setErrorMessage(ErrorMessages.UNKNOWN);
-
-            log.info("add response error data: {}", response);
-
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
             return generateErrorResponse(response, ErrorCodes.UNKNOWN_EXCEPTION, ErrorMessages.UNKNOWN, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.setAnnualBonus(annualBonusService.calculate(request.getPosition(), request.getSalary(),
