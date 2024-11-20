@@ -21,9 +21,6 @@ public class Request {
     @Size(max = 32)
     private String uid;
 
-    /**
-     * Уникальный идентификатор операции
-     */
     @NotBlank
     @Size(max = 32)
     private String operationUid;

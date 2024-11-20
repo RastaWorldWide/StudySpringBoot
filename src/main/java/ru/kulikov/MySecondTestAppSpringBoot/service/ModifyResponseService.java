@@ -8,4 +8,3 @@ public interface ModifyResponseService {
 
     Response modify(Response response);
 }
-
